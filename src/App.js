@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import ListUser from './components/ListUser';
 import Pagination from './components/Pagination';
 
 const App = () => {
 	const [users, setUsers] = useState([]);
-	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [usersPerPage] = useState(12);
@@ -36,16 +36,16 @@ const App = () => {
 	};
 
 	return (
-		<div className='App'>
+		<Container>
 			<h1>Show ABS's Employees</h1>
-			<div className='btn'>
-				<button className='french' onClick={handleFrenchUsers}>
+			<BtnWrapper>
+				<Button data='french' onClick={handleFrenchUsers}>
 					Only FR
-				</button>
-				<button className='allusers' onClick={handleAllUsers}>
+				</Button>
+				<Button data='all' onClick={handleAllUsers}>
 					All
-				</button>
-			</div>
+				</Button>
+			</BtnWrapper>
 
 			<ListUser users={currentUsers} loading={loading} />
 
@@ -55,8 +55,27 @@ const App = () => {
 				paginate={paginate}
 				currentPage={currentPage}
 			/>
-		</div>
+		</Container>
 	);
 };
+
+const Container = styled.div`
+	font-family: sans-serif;
+	text-align: center;
+`;
+const BtnWrapper = styled.div`
+	margin: 20px;
+`;
+const Button = styled.button`
+	background-color: ${({ data }) => (data === 'french' ? '#4caf50' : 'black')};
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin-right: 20px;
+`;
 
 export default App;
